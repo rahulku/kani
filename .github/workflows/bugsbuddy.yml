@@ -1,0 +1,49 @@
+name: BugsBuddy selected verification
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bugsbuddy-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  selected-verification:
+    name: BugsBuddy selected verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact source commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: bugsbuddy-source
+          persist-credentials: false
+          submodules: false
+      - name: Check out reviewed tooling, configuration and harnesses
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: bugsbuddy-tooling
+          persist-credentials: false
+          submodules: false
+      - name: Select Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+      - name: Run reviewed bounded checks
+        env:
+          BUGSBUDDY_EXPECTED_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: >-
+          node bugsbuddy-tooling/.bugsbuddy/ci.mjs
+          --source bugsbuddy-source
+          --config bugsbuddy-tooling/.bugsbuddy/config.json
+          --output "$RUNNER_TEMP/bugsbuddy-evidence"
+      - name: Retain review evidence, including failed or incomplete results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: bugsbuddy-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/bugsbuddy-evidence
+          if-no-files-found: error
+          retention-days: 14

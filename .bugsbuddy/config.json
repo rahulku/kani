@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "targets": [
+    {
+      "id": "non-empty-range-contract",
+      "tool": "kani",
+      "harnessFile": ".bugsbuddy/harnesses/non-empty-range.rs",
+      "harness": "bugsbuddy_ci::range_contract",
+      "unwind": 2,
+      "timeoutSeconds": 120,
+      "assumptions": [
+        "Both endpoints are arbitrary i32 values; no endpoint values are excluded.",
+        "Only the selected demonstration library and range contract are checked.",
+        "The unwind bound is 2; the selected function and harness contain no user-written loops."
+      ],
+      "properties": [
+        "Equal endpoints return None.",
+        "Distinct endpoints return Some with start=min(a,b), end=max(a,b), and start < end.",
+        "The selected execution passes Kani's enabled built-in safety checks within the configured model and bounds."
+      ],
+      "manifest": "tests/cargo-kani/demos/non-empty-range/Cargo.toml",
+      "harnessTarget": "tests/cargo-kani/demos/non-empty-range/src/lib.rs"
+    }
+  ]
+}

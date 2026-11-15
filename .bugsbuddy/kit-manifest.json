@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "sha256": {
+    ".bugsbuddy/cbmc-worker/Dockerfile": "edf3550eb5d79ae9a9cffb5b1bdafc234a5306e5dd00b56fabae29bfd64e3dbe",
+    ".bugsbuddy/cbmc-worker/entrypoint.sh": "401986215cddc577eeee09e443878d2174a866af71f1bec64f9344c0e7733575",
+    ".bugsbuddy/ci.mjs": "ca0ecdbc67af6311da42066a861af7ae52f897d9b0377fa5dcc5ce96f16e27d0",
+    ".bugsbuddy/config.example.json": "a64ba4c84d27b64da36a8691b668be8a5152be6f279a2fa6b72399c86ab79482",
+    ".bugsbuddy/config.json": "b131cdc50badf4dc4720a972007a388a1172cf9c6bbe528dc2ef640c00c6212e",
+    ".bugsbuddy/kani-worker/Dockerfile": "a1e7e0919340a0f03a0f8ffce09269a1c383ac11cd597d0b045e202a402b4b04",
+    ".bugsbuddy/kani-worker/entrypoint.sh": "542c56f6434716c74767a236e1099d583af11a6e2b9347bbe04e6a14350dfe72",
+    ".bugsbuddy/verify.sh": "53ff03b5aca5358c9b1f7ffe6fb64d73361b942d8a4d4daa4f923f7440b884a3",
+    ".github/workflows/bugsbuddy.yml": "74c57f85d9eab5a289e89e8af4cccd1c25955b79422d37444475f28b8882e226",
+    "BUGSBUDDY_SETUP.md": "d336c406b16f5512f397f27935e139100fde4b537e259cba0efa3d6f61462be9",
+    ".bugsbuddy/harnesses/non-empty-range.rs": "1eb8ffea97e18cb3a2f0e680f85df1520b46547dda510c83b7673d1c01fecb35"
+  }
+}
