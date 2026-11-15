@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "targets": [
+    {
+      "id": "rust-reader",
+      "tool": "kani",
+      "manifest": "Cargo.toml",
+      "harnessFile": ".bugsbuddy/harnesses/read_bytes.rs",
+      "harnessTarget": "src/lib.rs",
+      "harness": "bugsbuddy_guided::read_bytes_contract",
+      "unwind": 6,
+      "timeoutSeconds": 120,
+      "assumptions": ["Four-byte backing buffer, prefix length 0..=4, arbitrary usize read count; review the harness before using."],
+      "properties": ["Oversized reads fail without moving the cursor; reads within bounds advance by count."]
+    },
+    {
+      "id": "c-parser",
+      "tool": "cbmc",
+      "sources": ["src/parser.c"],
+      "harnessFile": ".bugsbuddy/harnesses/parser.c",
+      "harness": "bugsbuddy_proof",
+      "unwind": 8,
+      "timeoutSeconds": 60,
+      "assumptions": ["Replace with the actual input, environment and allocation assumptions in your reviewed harness."],
+      "properties": ["Replace with the selected parser assertions; the runner also enables its documented CBMC safety checks."]
+    }
+  ]
+}
